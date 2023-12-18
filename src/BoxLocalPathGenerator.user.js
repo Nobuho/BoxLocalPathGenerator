@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        box_local_path
 // @description box url to local path
-// @namespace   nnn
-// @version     3.0
+// @namespace   Nobuho Tanaka
+// @version     3.2
 // @match     https://takenaka.ent.box.com/folder/*
 // @grant        GM_setClipboard
 // ==/UserScript==
