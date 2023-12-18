@@ -2,7 +2,7 @@
 // @name        box_local_path
 // @description box url to local path
 // @namespace   Nobuho Tanaka
-// @version     3.2
+// @version     3.3
 // @match     https://takenaka.ent.box.com/folder/*
 // @grant        GM_setClipboard
 // ==/UserScript==
@@ -11,7 +11,7 @@ window.addEventListener("load", function () {
   "use strict";
 
   ////////////////////////////////////////////////////////////////
-  // 基準となるベースパス
+  // 基準となるベースpath
   let base_path = "C:\\Takenaka\\Box\\";
   ////////////////////////////////////////////////////////////////
 
