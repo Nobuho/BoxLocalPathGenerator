@@ -2,7 +2,7 @@
 // @name        box_local_path
 // @description box url to local path
 // @author       Nobuho Tanaka
-// @version      3.5
+// @version      3.6
 // @match        https://takenaka.ent.box.com/folder/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=box.com
 // @resource     toastr.min.css https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css
@@ -103,5 +103,10 @@ window.addEventListener("load", function () {
   // クリックのローカルパスのコピー
   document.getElementById("copy_local_link").onclick = function () {
     path_copy();
+    // コピー時のテキストの表示および消去を簡素化（タイマーの処理の最適化）
+    document.getElementById("copy_message").style.display = "inline";
+    setTimeout(function () {
+      document.getElementById("copy_message").style.display = "none";
+    }, 2000);
   };
 });
