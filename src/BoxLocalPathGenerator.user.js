@@ -1,23 +1,71 @@
 // ==UserScript==
 // @name        box_local_path
 // @description box url to local path
-// @namespace   Nobuho Tanaka
-// @version     3.4
-// @match     https://takenaka.ent.box.com/folder/*
+// @author       Nobuho Tanaka
+// @version      3.5
+// @match        https://takenaka.ent.box.com/folder/*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=box.com
+// @resource     toastr.min.css https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css
+// @require      https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js
+// @require      https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js
 // @grant        GM_setClipboard
+// @grant        GM_addStyle
+// @grant        GM_getResourceText
 // ==/UserScript==
+
+function path_copy() {
+  let b = "file://C:/Takenaka/Box/";
+  const c = document.querySelector(
+    "button.ItemListBreadcrumbOverflow-menuButton"
+  );
+  c &&
+    (c.click(),
+    (b += [
+      ...document.querySelectorAll(
+        "a[data-resin-target='openfolder'].menu-item"
+      ),
+    ]
+      .map((a) => a.innerText)
+      .filter((a) => "\u3059\u3079\u3066\u306e\u30d5\u30a1\u30a4\u30eb" !== a)
+      .join("/")),
+    b.endsWith("/") || (b += "/"));
+  b += [...document.querySelectorAll(".ItemListBreadcrumb-listItem")]
+    .map((a) => a.innerText)
+    .filter(
+      (a) =>
+        "" !== a && "\u3059\u3079\u3066\u306e\u30d5\u30a1\u30a4\u30eb" !== a
+    )
+    .join("/");
+  document.body.click();
+  // alert(decodeURI(b));
+  console.log(b);
+  // setTimeout(() => navigator.clipboard.writeText(b), 500);
+  GM_setClipboard(b);
+}
+
+// /////////////////////////////////////////////////////////////////////////////////////////////////
+
+const newCSS = GM_getResourceText("toastr.min.css");
+GM_addStyle(newCSS);
+
+document.body.addEventListener("keydown", function (e) {
+  if (e.altKey && e.key === "s") {
+    path_copy();
+
+    // /////////////////////////////////////////////////////////////////////
+    toastr.options = {
+      positionClass: "toast-bottom-right",
+      timeOut: "1000",
+    };
+    toastr.success("Boxローカルパスをコピーしました");
+    e.preventDefault();
+    // /////////////////////////////////////////////////////////////////////
+  }
+});
+// /////////////////////////////////////////////////////////////////////////////////////////////////
 
 window.addEventListener("load", function () {
   "use strict";
-
-  ////////////////////////////////////////////////////////////////
-  // 基準となるベースパス
-  let base_path = "C:\\Takenaka\\Box\\";
-  ////////////////////////////////////////////////////////////////
-
-  let visible_path;
-  let last_path;
-  let hidden_path;
 
   // 検索窓の横を挿入対象に
   let target_elm = document.getElementsByClassName("header-search")[0];
@@ -54,74 +102,6 @@ window.addEventListener("load", function () {
 
   // クリックのローカルパスのコピー
   document.getElementById("copy_local_link").onclick = function () {
-    // パスの取得
-    let array_path = [];
-    // メニューアイコンの取得
-    let menu_elm = document.querySelector(
-      "button.ItemListBreadcrumbOverflow-menuButton"
-    );
-
-    if (menu_elm === null) {
-      // 表示されているパスを読み込み
-      visible_path = document.querySelectorAll(
-        "ol.ItemListBreadcrumb-list[data-testid=item-list-breadcrumb-list] a.ItemListBreadcrumb-link"
-      );
-      for (j = 0; j < visible_path.length; j++) {
-        array_path.push(visible_path[j].textContent);
-      }
-
-      // 最後のパスを読み込み
-      last_path = document.querySelectorAll(
-        "ol.ItemListBreadcrumb-list[data-testid=item-list-breadcrumb-list] h1.page-title"
-      );
-      for (kk = 0; kk < last_path.length; kk++) {
-        array_path.push(last_path[kk].textContent);
-      }
-    } else {
-      // パス表示メニューを開く
-      document
-        .querySelector("button.ItemListBreadcrumbOverflow-menuButton")
-        .click();
-
-      // 隠れたパスを読み込み
-      hidden_path = document.querySelectorAll("a.menu-item");
-      for (let i = 0; i < hidden_path.length; i++) {
-        array_path.push(hidden_path[i].textContent);
-      }
-
-      // 表示されているパスを読み込み
-      visible_path = document.querySelectorAll(
-        "ol.ItemListBreadcrumb-list[data-testid=item-list-breadcrumb-list] a.ItemListBreadcrumb-link"
-      );
-      for (let j = 0; j < visible_path.length; j++) {
-        array_path.push(visible_path[j].textContent);
-      }
-
-      // 最後のパスを読み込み
-      last_path = document.querySelectorAll(
-        "ol.ItemListBreadcrumb-list[data-testid=item-list-breadcrumb-list] h1.page-title"
-      );
-      for (let k = 0; k < last_path.length; k++) {
-        array_path.push(last_path[k].textContent);
-      }
-
-      // パス表示メニューを閉じる
-      document
-        .querySelector("button.ItemListBreadcrumbOverflow-menuButton")
-        .click();
-    }
-
-    // 先頭の「すべてのファイル」を削除
-    array_path.shift();
-
-    // パスを結合してコピー
-    let local_path = base_path + array_path.join("\\");
-    GM_setClipboard(local_path);
-
-    // コピー時のテキストの表示および消去を簡素化（タイマーの処理の最適化）
-    document.getElementById("copy_message").style.display = "inline";
-    setTimeout(function () {
-      document.getElementById("copy_message").style.display = "none";
-    }, 2000);
+    path_copy();
   };
 });
