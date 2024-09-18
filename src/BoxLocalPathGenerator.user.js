@@ -2,7 +2,7 @@
 // @name        box_local_path
 // @description box url to local path
 // @author       Nobuho Tanaka
-// @version      3.6
+// @version      3.6.1
 // @match        https://takenaka.ent.box.com/folder/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=box.com
 // @resource     toastr.min.css https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css
@@ -71,19 +71,19 @@ window.addEventListener("load", function () {
   let target_elm = document.getElementsByClassName("header-search")[0];
 
   // コピー時のテキストの追加
-  let copied_text = document.createElement("div"); //新しい要素を"タグ名"で作成し、変数copied_text に代入
-  let str_copied = document.createTextNode("Copied!"); //テキストノードを代入
-  copied_text.style.textDecoration = "None";
-  copied_text.style.marginLeft = "8px";
-  copied_text.style.lineHeight = "40px";
-  copied_text.style.display = "none";
-  copied_text.appendChild(str_copied); //テキストノードを追加
-  copied_text.setAttribute("id", "copy_message");
-  copied_text.classList.add("copy-link");
-  target_elm.parentNode.insertBefore(
-    copied_text,
-    target_elm.nextElementSibling
-  );
+  // let copied_text = document.createElement("div"); //新しい要素を"タグ名"で作成し、変数copied_text に代入
+  // let str_copied = document.createTextNode("Copied!"); //テキストノードを代入
+  // copied_text.style.textDecoration = "None";
+  // copied_text.style.marginLeft = "8px";
+  // copied_text.style.lineHeight = "40px";
+  // copied_text.style.display = "none";
+  // copied_text.appendChild(str_copied); //テキストノードを追加
+  // copied_text.setAttribute("id", "copy_message");
+  // copied_text.classList.add("copy-link");
+  // target_elm.parentNode.insertBefore(
+  //   copied_text,
+  //   target_elm.nextElementSibling
+  // );
 
   // クリック用アイコンの追加
   let folder_icon = document.createElement("a"); //新しい要素を"タグ名"で作成し、変数folder_icon に代入
@@ -103,10 +103,20 @@ window.addEventListener("load", function () {
   // クリックのローカルパスのコピー
   document.getElementById("copy_local_link").onclick = function () {
     path_copy();
-    // コピー時のテキストの表示および消去を簡素化（タイマーの処理の最適化）
-    document.getElementById("copy_message").style.display = "inline";
-    setTimeout(function () {
-      document.getElementById("copy_message").style.display = "none";
-    }, 2000);
+
+    // /////////////////////////////////////////////////////////////////////
+    toastr.options = {
+      positionClass: "toast-bottom-right",
+      timeOut: "1000",
+    };
+    toastr.success("Boxローカルパスをコピーしました");
+    e.preventDefault();
+    // /////////////////////////////////////////////////////////////////////
+
+    // // コピー時のテキストの表示および消去を簡素化（タイマーの処理の最適化）
+    // document.getElementById("copy_message").style.display = "inline";
+    // setTimeout(function () {
+    //   document.getElementById("copy_message").style.display = "none";
+    // }, 2000);
   };
 });
