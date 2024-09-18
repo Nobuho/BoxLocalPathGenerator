@@ -87,7 +87,7 @@ window.addEventListener("load", function () {
 
   // クリック用アイコンの追加
   let folder_icon = document.createElement("a"); //新しい要素を"タグ名"で作成し、変数folder_icon に代入
-  let str_icon = document.createTextNode("📂"); //テキストノードを代入
+  let str_icon = document.createTextNode("📂Click here or Alt+S"); //テキストノードを代入
   folder_icon.href = "javascript:void(0);"; //ダミーのリンクを作成
   folder_icon.style.textDecoration = "None"; //始めは表示しない
   folder_icon.style.marginLeft = "8px";
