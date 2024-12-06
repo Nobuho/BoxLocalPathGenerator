@@ -2,7 +2,7 @@
 // @name        box_local_path
 // @description box url to local path
 // @author       Nobuho Tanaka
-// @version      3.6.3
+// @version      3.7.0
 // @match        https://takenaka.ent.box.com/folder/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=box.com
 // @resource     toastr.min.css https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css
