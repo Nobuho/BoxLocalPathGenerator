@@ -18,22 +18,26 @@
 const newCSS = GM_getResourceText("toastr.min.css");
 GM_addStyle(newCSS);
 
-function path_copy() {
+const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time)); //timeはミリ秒
+
+async function path_copy() {
   let b = "file://C:/Takenaka/Box/";
   const c = document.querySelector(
     "button.ItemListBreadcrumbOverflow-menuButton"
   );
-  c &&
-    (c.click(),
-    (b += [
+  if (c) {
+    c.click();
+    await sleep(10); // クリック後に10ミリ秒の遅延を追加
+    b += [
       ...document.querySelectorAll(
         "a[data-resin-target='openfolder'].menu-item"
       ),
     ]
       .map((a) => a.innerText)
       .filter((a) => "\u3059\u3079\u3066\u306e\u30d5\u30a1\u30a4\u30eb" !== a)
-      .join("/")),
-    b.endsWith("/") || (b += "/"));
+      .join("/");
+    if (!b.endsWith("/")) b += "/";
+  }
   b += [...document.querySelectorAll(".ItemListBreadcrumb-listItem")]
     .map((a) => a.innerText)
     .filter(
@@ -52,7 +56,33 @@ function path_copy() {
     timeOut: "1000",
   };
   toastr.success("Boxローカルパスをコピーしました");
-  e.preventDefault();
+}
+
+function add_text() {
+  const target_elm = document.querySelector(
+    ".header-search.prevent-item-deselection.HeaderSearch--isNewQuickSearch"
+  );
+
+  if (target_elm) {
+    console.log("found!!");
+    // クリック用アイコンの追加
+    let folder_icon = document.createElement("a"); // 新しい要素を"タグ名"で作成し、変数folder_icon に代入
+    let str_icon = document.createTextNode("📂 Click or Alt+S"); // テキストノードを代入
+    folder_icon.href = "javascript:void(0);"; // ダミーのリンクを作成
+    folder_icon.style.marginLeft = "8px";
+    folder_icon.style.lineHeight = "40px";
+    folder_icon.style.textDecoration = "None"; //下線消す
+    folder_icon.appendChild(str_icon); // テキストノードを追加
+    folder_icon.setAttribute("id", "copy_local_link");
+    folder_icon.classList.add("add-link");
+
+    // ターゲット要素の横に追加
+    target_elm.insertAdjacentElement("afterend", folder_icon);
+    // クリックのローカルパスのコピー
+    document.getElementById("copy_local_link").onclick = function () {
+      path_copy();
+    };
+  }
 }
 
 // /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,29 +95,10 @@ document.body.addEventListener("keydown", function (e) {
 
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 
-window.addEventListener("load", function () {
-  "use strict";
-
-  // 検索窓の横を挿入対象に
-  let target_elm = document.getElementsByClassName("header-search")[0];
-
-  // クリック用アイコンの追加
-  let folder_icon = document.createElement("a"); //新しい要素を"タグ名"で作成し、変数folder_icon に代入
-  let str_icon = document.createTextNode("📂 Click or Alt+S"); //テキストノードを代入
-  folder_icon.href = "javascript:void(0);"; //ダミーのリンクを作成
-  folder_icon.style.textDecoration = "None"; //始めは表示しない
-  folder_icon.style.marginLeft = "8px";
-  folder_icon.style.lineHeight = "40px";
-  folder_icon.appendChild(str_icon); //テキストノードを追加
-  folder_icon.setAttribute("id", "copy_local_link");
-  folder_icon.classList.add("add-link");
-  target_elm.parentNode.insertBefore(
-    folder_icon,
-    target_elm.nextElementSibling
-  );
-
-  // クリックのローカルパスのコピー
-  document.getElementById("copy_local_link").onclick = function () {
-    path_copy();
-  };
+window.addEventListener("load", (event) => {
+  console.log("ページが完全に読み込まれました");
+  setTimeout(() => {
+    // ここに遅延させて実行したい処理を記述
+    add_text();
+  }, 3000); // nミリ秒遅延
 });
