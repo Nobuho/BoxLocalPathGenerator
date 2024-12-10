@@ -1,4 +1,4 @@
-# BOX Local Path generator
+# 竹中BOX Local Path generator
 
 - BOX において、Web で開いた BOX ページから、ローカルでのフォルダパスを生成する TamperMonkey スクリプトです。
 - BOX のリンクURLをWeb で開いた際に、ローカルフォルダの BOX Drive で開きなおしたい時に便利な Edge, Chrome の拡張を作りました。
