@@ -2,7 +2,7 @@
 // @name        box_local_path
 // @description box url to local path
 // @author       Nobuho Tanaka
-// @version      3.7.0
+// @version      3.7.1
 // @match        https://takenaka.ent.box.com/folder/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=box.com
 // @resource     toastr.min.css https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css
@@ -34,7 +34,7 @@ async function path_copy() {
       ),
     ]
       .map((a) => a.innerText)
-      .filter((a) => "\u3059\u3079\u3066\u306e\u30d5\u30a1\u30a4\u30eb" !== a)
+      .filter((a) => "すべてのファイル" !== a)
       .join("/");
     if (!b.endsWith("/")) b += "/";
   }
@@ -42,7 +42,7 @@ async function path_copy() {
     .map((a) => a.innerText)
     .filter(
       (a) =>
-        "" !== a && "\u3059\u3079\u3066\u306e\u30d5\u30a1\u30a4\u30eb" !== a
+        "" !== a && "すべてのファイル" !== a
     )
     .join("/");
   document.body.click();
