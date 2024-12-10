@@ -21,6 +21,8 @@ BOX のリンクを URL で共有することがあると思うのですが、We
 1. Edgeの拡張機能[Tampermonkey](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjlj4WJopiDAxVS_mEKHSTbBkkQFnoECBIQAQ&url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Ftampermonkey%2Fdhdgffkkebhmkfjojejmpbldmpobfkfo%3Fhl%3Dja&usg=AOvVaw3EwS7u8bUn9a0-2pzZ_sbo&opi=89978449)をインストールする
 1. [こちらのリンク](https://github.com/Nobuho/BoxLocalPathGenerator/raw/master/src/BoxLocalPathGenerator.user.js)をクリックするとTampermonkeyスクリプトのインストール画面が表示される
 1. 「インストール」をクリック
+2. 拡張機能 ＞ Tampermonkeyのサブメニュー ＞ 拡張機能の管理 を開き、以下の設定をONにする
+![image 93](https://github.com/user-attachments/assets/bca2a3ca-8b3c-464f-8538-2b95221fff58)
 1. 完了！
 
 ※スクリプトインストール時の画面（再インストールになっていますが同じです）
