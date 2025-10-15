@@ -3,6 +3,10 @@
 - BOX において、Web で開いた BOX ページから、ローカルでのフォルダパスを生成する TamperMonkey スクリプトです。
 - BOX のリンクURLをWeb で開いた際に、ローカルフォルダの BOX Drive で開きなおしたい時に便利な Edge, Chrome の拡張を作りました。
 
+# 更新情報
+
+- 251015_BOXのUI変更に伴う修正
+
 # 必要環境
 
 - ブラウザ：Edge or Chrome
